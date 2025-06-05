@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="GatewayAgent" Version="11000" InternalType="Console">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00040001N0005Debug0000000000000001N0007Release0000000000000001N0018Siemens2050Release0000000000000001N0010TRBRelease000000000000]]>
+    </Plugin>
+    <Plugin Name="CppCheck"/>
+  </Plugins>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="src">
+    <File Name="src/dpsCertChecker.h"/>
+    <File Name="src/dpsCertChecker.cpp"/>
+    <File Name="src/WatchDog.h"/>
+    <File Name="src/WatchDog.cpp"/>
+    <File Name="src/StringParser.h"/>
+    <File Name="src/StringParser.cpp"/>
+    <File Name="src/SendMessageToCloudWrapper.h"/>
+    <File Name="src/SendMessageToCloudWrapper.cpp"/>
+    <File Name="src/ProvisionDevice.h"/>
+    <File Name="src/PersistencyManager.h"/>
+    <File Name="src/PersistencyManager.cpp"/>
+    <File Name="src/PackageManager.h"/>
+    <File Name="src/PackageManager.cpp"/>
+    <File Name="src/MQTTCommunicationWrapper.h"/>
+    <File Name="src/MQTTCommunicationWrapper.cpp"/>
+    <File Name="src/main.cpp"/>
+    <File Name="src/LogFileCleanUp.h"/>
+    <File Name="src/LogFileCleanUp.cpp"/>
+    <File Name="src/LocalBrokerCommunicationManager.h"/>
+    <File Name="src/LocalBrokerCommunicationManager.cpp"/>
+    <File Name="src/GlobalOperations.h"/>
+    <File Name="src/GlobalOperations.cpp"/>
+    <File Name="src/GatewayAgentManager.h"/>
+    <File Name="src/GatewayAgentManager.cpp"/>
+    <File Name="src/ExceptionLogger.h"/>
+    <File Name="src/ExceptionLogger.cpp"/>
+    <File Name="src/Common.h"/>
+    <File Name="src/CloudCommunicationWrapper.h"/>
+    <File Name="src/CloudCommunicationWrapper.cpp"/>
+    <File Name="src/certs.h"/>
+    <File Name="src/certs.c"/>
+    <File Name="src/AppHealthMonitoring.h"/>
+    <File Name="src/AppHealthMonitoring.cpp"/>
+  </VirtualDirectory>
+  <Dependencies Name="Iot2050Release"/>
+  <Dependencies Name="AtreyoRelease"/>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="KemsysGatewayRelease"/>
+  <Dependencies Name="QuectelRelease"/>
+  <Dependencies Name="Release"/>
+  <Dependencies Name="Siemens2050Release"/>
+  <Dependencies Name="TRBRelease"/>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="AtreyoRelease" CompilerType="Atreyo_Compiler" DebuggerType="" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O0 -Wall -fPIC -march=mips32r2" C_Options="-O2 -Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./src"/>
+        <IncludePath Value="./libs/Atreyo_Gateway/include"/>
+        <IncludePath Value="./libs/Atreyo_Gateway/include/mosquitto"/>
+        <IncludePath Value="./libs/Atreyo_Gateway/include/azureiot"/>
+        <IncludePath Value="./libs/Atreyo_Gateway/include/iothub_service_client"/>
+        <Preprocessor Value="NDEBUG"/>
+        <Preprocessor Value="ATREYO_GATEWAY"/>
+      </Compiler>
+      <Linker Options="-march=mips32r2" Required="yes">
+        <LibraryPath Value="./libs/Atreyo_Gateway/libs"/>
+        <Library Value="libiothub_client"/>
+        <Library Value="libiothub_client_http_transport"/>
+        <Library Value="libiothub_client_mqtt_transport"/>
+        <Library Value="libumqtt"/>
+        <Library Value="libiothub_client_mqtt_ws_transport"/>
+        <Library Value="libiothub_client_amqp_transport"/>
+        <Library Value="libiothub_client_amqp_ws_transport"/>
+        <Library Value="libiothub_service_client"/>
+        <Library Value="libserializer"/>
+        <Library Value="libuamqp"/>
+        <Library Value="libuhttp"/>
+        <Library Value="libparson"/>
+        <Library Value="libpthread"/>
+        <Library Value="libcurl"/>
+        <Library Value="libssl"/>
+        <Library Value="libumock_c"/>
+        <Library Value="libcrypto"/>
+        <Library Value="libm"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libmosquitto"/>
+        <Library Value="libhsm_security_client"/>
+        <Library Value="libaziotsharedutil"/>
+        <Library Value="libutpm"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="Atreyo/$(ProjectName)" IntermediateDirectory="$(ConfigurationName)" Command="$(OutputFile)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild>
+        <Command Enabled="yes">mkdir -p Atreyo</Command>
+        <Command Enabled="yes">touch $(OutputFile).auto_gen.crc.txt</Command>
+      </PreBuild>
+      <PostBuild>
+        <Command Enabled="yes">rm $(OutputFile).auto_gen.crc.txt</Command>
+        <Command Enabled="yes">cksum $(OutputFile) &gt;&gt; $(OutputFile).auto_gen.crc.txt</Command>
+        <Command Enabled="yes">if echo "$(Preprocessors)" | grep -q -- "-DPLC_HEARTBEAT"; then mkdir -p Atreyo_Heartbeat;mv $(OutputFile) Atreyo_Heartbeat/GatewayAgent;mv $(OutputFile).auto_gen.crc.txt Atreyo_Heartbeat/;else mkdir -p Atreyo_Release;mv $(OutputFile) Atreyo_Release/GatewayAgent;mv $(OutputFile).auto_gen.crc.txt Atreyo_Release/;fi</Command>
+        <Command Enabled="yes">rm -rf Atreyo</Command>
+        <Command Enabled="yes"/>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="DPS_AtreyoRelease" CompilerType="Atreyo_Compiler" DebuggerType="" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O0 -Wall -fPIC -march=mips32r2" C_Options="-O2 -Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./src"/>
+        <IncludePath Value="./libs/Atreyo_Gateway/include"/>
+        <IncludePath Value="./libs/Atreyo_Gateway/include/mosquitto"/>
+        <IncludePath Value="./libs/Atreyo_Gateway/include/azureiot"/>
+        <IncludePath Value="./libs/Atreyo_Gateway/include/iothub_service_client"/>
+        <IncludePath Value="./libs/Atreyo_Gateway/include/azure_macro_utils"/>
+        <IncludePath Value="./libs/Atreyo_Gateway/include/azure_c_shared_utility"/>
+        <Preprocessor Value="NDEBUG"/>
+        <Preprocessor Value="ATREYO_GATEWAY"/>
+        <Preprocessor Value="PROV_DEVICE_MACROS"/>
+        <Preprocessor Value="HSM_TYPE_X509"/>
+        <Preprocessor Value="DPS"/>
+      </Compiler>
+      <Linker Options="-march=mips32r2" Required="yes">
+        <LibraryPath Value="./libs/Atreyo_Gateway/libs"/>
+        <Library Value="libiothub_client"/>
+        <Library Value="libiothub_client_http_transport"/>
+        <Library Value="libiothub_client_mqtt_transport"/>
+        <Library Value="libumqtt"/>
+        <Library Value="libiothub_client_mqtt_ws_transport"/>
+        <Library Value="libiothub_client_amqp_transport"/>
+        <Library Value="libiothub_client_amqp_ws_transport"/>
+        <Library Value="libiothub_service_client"/>
+        <Library Value="libserializer"/>
+        <Library Value="libuamqp"/>
+        <Library Value="libuhttp"/>
+        <Library Value="libparson"/>
+        <Library Value="libpthread"/>
+        <Library Value="libcurl"/>
+        <Library Value="libssl"/>
+        <Library Value="libumock_c"/>
+        <Library Value="libcrypto"/>
+        <Library Value="libm"/>
+        <Library Value="libmosquitto"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libprov_device_client"/>
+        <Library Value="libprov_device_ll_client"/>
+        <Library Value="libprov_http_transport"/>
+        <Library Value="libprov_mqtt_ws_transport"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libprov_mqtt_transport"/>
+        <Library Value="libhsm_security_client"/>
+        <Library Value="libdl"/>
+        <Library Value="libutpm"/>
+        <Library Value="libuuid"/>
+        <Library Value="libaziotsharedutil"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="DPS_Atreyo_Release/$(ProjectName)" IntermediateDirectory="$(ConfigurationName)" Command="$(OutputFile)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild>
+        <Command Enabled="yes">touch $(OutputFile).auto_gen.crc.txt</Command>
+      </PreBuild>
+      <PostBuild>
+        <Command Enabled="yes">rm $(OutputFile).auto_gen.crc.txt</Command>
+        <Command Enabled="yes">cksum $(OutputFile) &gt;&gt; $(OutputFile).auto_gen.crc.txt</Command>
+        <Command Enabled="yes"/>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="DPS_Siemens2050Release" CompilerType="IOT2050_Compiler" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O0;-Wall;-fPIC;-march=armv8-a" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./libs/IoT2050_Gateway/include"/>
+        <IncludePath Value="./libs/IoT2050_Gateway/include/mosquitto"/>
+        <IncludePath Value="./libs/IoT2050_Gateway/include/azureiot"/>
+        <IncludePath Value="./libs/IoT2050_Gateway/include/iothub_service_client"/>
+        <IncludePath Value="./src"/>
+        <Preprocessor Value="NDEBUG"/>
+        <Preprocessor Value="SIEMENS_GATEWAY"/>
+        <Preprocessor Value="PROV_DEVICE_MACROS"/>
+        <Preprocessor Value="HSM_TYPE_X509"/>
+        <Preprocessor Value="DPS"/>
+      </Compiler>
+      <Linker Options="-march=armv8-a" Required="yes">
+        <LibraryPath Value="./libs/IoT2050_Gateway/libs"/>
+        <Library Value="libiothub_client"/>
+        <Library Value="libiothub_client_http_transport"/>
+        <Library Value="libiothub_client_mqtt_transport"/>
+        <Library Value="libumqtt"/>
+        <Library Value="libiothub_client_mqtt_ws_transport"/>
+        <Library Value="libiothub_client_amqp_transport"/>
+        <Library Value="libiothub_client_amqp_ws_transport"/>
+        <Library Value="libiothub_service_client"/>
+        <Library Value="libserializer"/>
+        <Library Value="libuamqp"/>
+        <Library Value="libuhttp"/>
+        <Library Value="libparson"/>
+        <Library Value="libpthread"/>
+        <Library Value="libcurl"/>
+        <Library Value="libssl"/>
+        <Library Value="libumock_c"/>
+        <Library Value="libcrypto"/>
+        <Library Value="libm"/>
+        <Library Value="libmosquitto"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libprov_device_client"/>
+        <Library Value="libprov_device_ll_client"/>
+        <Library Value="libprov_http_transport"/>
+        <Library Value="libprov_mqtt_ws_transport"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libprov_mqtt_transport"/>
+        <Library Value="libxml2"/>
+        <Library Value="libprovisioning_service_client"/>
+        <Library Value="libuuid"/>
+        <Library Value="libhsm_security_client"/>
+        <Library Value="libaziotsharedutil"/>
+        <Library Value="libmsr_riot"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="DPS_Siemens2050_Release/$(ProjectName)" IntermediateDirectory="$(ConfigurationName)" Command="$(OutputFile)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild>
+        <Command Enabled="yes">touch $(OutputFile).auto_gen.crc.txt</Command>
+      </PreBuild>
+      <PostBuild>
+        <Command Enabled="yes">rm $(OutputFile).auto_gen.crc.txt</Command>
+        <Command Enabled="yes">cksum $(OutputFile) &gt;&gt; $(OutputFile).auto_gen.crc.txt</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="DSP_TRBRelease" CompilerType="TRB_Compiler" DebuggerType="" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-marm;-mfloat-abi=hard;-mfpu=neon-vfpv4;-mcpu=cortex-a7;--sysroot=/root/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi;--verbose" C_Options="-marm;-mfloat-abi=hard;-mfpu=neon-vfpv4;-mcpu=cortex-a7;--sysroot=/root/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./libs/TRB_Gateway/include"/>
+        <IncludePath Value="./libs/TRB_Gateway/include/mosquitto"/>
+        <IncludePath Value="./libs/TRB_Gateway/include/azureiot"/>
+        <IncludePath Value="./libs/TRB_Gateway/include/iothub_service_client"/>
+        <IncludePath Value="./src"/>
+        <Preprocessor Value="NDEBUG"/>
+        <Preprocessor Value="TRB_GATEWAY"/>
+        <Preprocessor Value="PROV_DEVICE_MACROS"/>
+        <Preprocessor Value="HSM_TYPE_X509"/>
+        <Preprocessor Value="DPS"/>
+      </Compiler>
+      <Linker Options="-march=armv7-a;-mthumb;-mfpu=neon-vfpv4;-mfloat-abi=hard;--sysroot=/opt/TRB_toolchain/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi;--verbose" Required="yes">
+        <LibraryPath Value="./libs/TRB_Gateway/helper_libs"/>
+        <LibraryPath Value="./libs/TRB_Gateway/libs"/>
+        <LibraryPath Value="/opt/TRB_toolchain/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi/usr/lib"/>
+        <LibraryPath Value="/opt/TRB_toolchain/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi/lib"/>
+        <Library Value="libiothub_client"/>
+        <Library Value="libiothub_client_http_transport"/>
+        <Library Value="libiothub_client_mqtt_transport"/>
+        <Library Value="libumqtt"/>
+        <Library Value="libiothub_client_mqtt_ws_transport"/>
+        <Library Value="libiothub_client_amqp_transport"/>
+        <Library Value="libiothub_client_amqp_ws_transport"/>
+        <Library Value="libiothub_service_client"/>
+        <Library Value="libserializer"/>
+        <Library Value="libuamqp"/>
+        <Library Value="libuhttp"/>
+        <Library Value="libparson"/>
+        <Library Value="libpthread"/>
+        <Library Value="libcurl"/>
+        <Library Value="libumock_c"/>
+        <Library Value="libssl"/>
+        <Library Value="libcrypto"/>
+        <Library Value="libm"/>
+        <Library Value="libmosquitto"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libprov_device_client"/>
+        <Library Value="libprov_device_ll_client"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libprov_mqtt_transport"/>
+        <Library Value="libhsm_security_client"/>
+        <Library Value="libutpm"/>
+        <Library Value="libaziotsharedutil"/>
+        <Library Value="libprov_http_transport"/>
+        <Library Value="libprov_mqtt_ws_transport"/>
+        <Library Value="libdl"/>
+        <Library Value="libuuid"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="DPS_TRB_Release/$(ProjectName)" IntermediateDirectory="$(ConfigurationName)" Command="$(OutputFile)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild>
+        <Command Enabled="yes">touch $(OutputFile).auto_gen.crc.txt</Command>
+      </PreBuild>
+      <PostBuild>
+        <Command Enabled="yes">rm $(OutputFile).auto_gen.crc.txt</Command>
+        <Command Enabled="yes">cksum $(OutputFile) &gt;&gt; $(OutputFile).auto_gen.crc.txt</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Debug" CompilerType="Quectel_Compiler" DebuggerType="" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;-O0;-std=c++11;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./src"/>
+        <IncludePath Value="/usr/local/include"/>
+        <IncludePath Value="/usr/local/include/azureiot"/>
+        <IncludePath Value="/usr/local/include/iothub_service_client"/>
+        <Preprocessor Value="DEBUG"/>
+      </Compiler>
+      <Linker Options="" Required="yes">
+        <LibraryPath Value="/usr/local/lib"/>
+        <Library Value="libiothub_client"/>
+        <Library Value="libiothub_client_http_transport"/>
+        <Library Value="libiothub_client_mqtt_transport"/>
+        <Library Value="libumqtt"/>
+        <Library Value="libaziotsharedutil"/>
+        <Library Value="libiothub_client_mqtt_ws_transport"/>
+        <Library Value="libiothub_client_amqp_transport"/>
+        <Library Value="libiothub_client_amqp_ws_transport"/>
+        <Library Value="libiothub_service_client"/>
+        <Library Value="libserializer"/>
+        <Library Value="libuamqp"/>
+        <Library Value="libuhttp"/>
+        <Library Value="libparson"/>
+        <Library Value="libpthread"/>
+        <Library Value="libcurl"/>
+        <Library Value="libssl"/>
+        <Library Value="libumock_c"/>
+        <Library Value="libcrypto"/>
+        <Library Value="libm"/>
+        <Library Value="libmosquitto"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="./Debug" IntermediateDirectory="$(ConfigurationName)" Command="$(OutputFile)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="KemsysGatewayRelease" CompilerType="Quectel_Compiler" DebuggerType="" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O0;-std=c++11;-Wall;-fPIC;-march=armv7-a;-mthumb;-mfpu=neon;-mfloat-abi=hard;--sysroot=/opt/newGateway/sysroots/armv7at2hf-neon-angstrom-linux-gnueabi" C_Options="-march=armv7-a;-mthumb;-mfpu=neon;-mfloat-abi=hard;--sysroot=/opt/newGateway/sysroots/armv7at2hf-neon-angstrom-linux-gnueabi" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./libs/Kemsys_Gateway/include"/>
+        <IncludePath Value="./libs/Kemsys_Gateway/include/mosquitto"/>
+        <IncludePath Value="./libs/Kemsys_Gateway/include/azureiot"/>
+        <IncludePath Value="./libs/Kemsys_Gateway/include/iothub_service_client"/>
+        <IncludePath Value="./src"/>
+        <Preprocessor Value="NDEBUG"/>
+        <Preprocessor Value="KEMSYS_GATEWAY"/>
+        <Preprocessor Value="BLUENRG_RESET"/>
+      </Compiler>
+      <Linker Options="-march=armv7-a;-mthumb;-mfpu=neon;-mfloat-abi=hard;--sysroot=/opt/newGateway/sysroots/armv7at2hf-neon-angstrom-linux-gnueabi" Required="yes">
+        <LibraryPath Value="./libs/Kemsys_Gateway/libs"/>
+        <Library Value="libiothub_client"/>
+        <Library Value="libiothub_client_http_transport"/>
+        <Library Value="libiothub_client_mqtt_transport"/>
+        <Library Value="libumqtt"/>
+        <Library Value="libaziotsharedutil"/>
+        <Library Value="libiothub_client_mqtt_ws_transport"/>
+        <Library Value="libiothub_client_amqp_transport"/>
+        <Library Value="libiothub_client_amqp_ws_transport"/>
+        <Library Value="libiothub_service_client"/>
+        <Library Value="libserializer"/>
+        <Library Value="libuamqp"/>
+        <Library Value="libuhttp"/>
+        <Library Value="libparson"/>
+        <Library Value="libpthread"/>
+        <Library Value="libcurl"/>
+        <Library Value="libssl"/>
+        <Library Value="libumock_c"/>
+        <Library Value="libcrypto"/>
+        <Library Value="libm"/>
+        <Library Value="libmosquitto"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="KemsysGateway_Release/$(ProjectName)" IntermediateDirectory="$(ConfigurationName)" Command="$(OutputFile)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild>
+        <Command Enabled="yes">touch $(OutputFile).auto_gen.crc.txt</Command>
+      </PreBuild>
+      <PostBuild>
+        <Command Enabled="yes">rm $(OutputFile).auto_gen.crc.txt</Command>
+        <Command Enabled="yes">cksum $(OutputFile) &gt;&gt; $(OutputFile).auto_gen.crc.txt</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="QuectelRelease" CompilerType="Quectel_Compiler" DebuggerType="" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-fPIC;-O3;-O0;-O2;-std=c++11;-Wall;-march=armv7-a" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./libs/Quectel_Gateway/include"/>
+        <IncludePath Value="./libs/Quectel_Gateway/include/zlib"/>
+        <IncludePath Value="./libs/Quectel_Gateway/include/zip"/>
+        <IncludePath Value="./libs/Quectel_Gateway/include/mosquitto"/>
+        <IncludePath Value="./libs/Quectel_Gateway/include/azureiot"/>
+        <IncludePath Value="./libs/Quectel_Gateway/include/iothub_service_client"/>
+        <IncludePath Value="./src"/>
+        <Preprocessor Value="DEBUG"/>
+        <Preprocessor Value="KEMSYS_GATEWAY"/>
+        <Preprocessor Value="QUECTEL_GATEWAY"/>
+      </Compiler>
+      <Linker Options="-march=armv7-a" Required="yes">
+        <LibraryPath Value="./libs/Quectel_Gateway/libs"/>
+        <Library Value="libiothub_client"/>
+        <Library Value="libiothub_client_http_transport"/>
+        <Library Value="libiothub_client_mqtt_transport"/>
+        <Library Value="libumqtt"/>
+        <Library Value="libaziotsharedutil"/>
+        <Library Value="libiothub_client_mqtt_ws_transport"/>
+        <Library Value="libiothub_client_amqp_transport"/>
+        <Library Value="libiothub_client_amqp_ws_transport"/>
+        <Library Value="libiothub_service_client"/>
+        <Library Value="libserializer"/>
+        <Library Value="libuamqp"/>
+        <Library Value="libuhttp"/>
+        <Library Value="libparson"/>
+        <Library Value="libpthread"/>
+        <Library Value="libcurl"/>
+        <Library Value="libssl"/>
+        <Library Value="libumock_c"/>
+        <Library Value="libcrypto"/>
+        <Library Value="libm"/>
+        <Library Value="libmosquitto"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="Quectel_Release/$(ProjectName)" IntermediateDirectory="$(ConfigurationName)" Command="$(OutputFile)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="Cross GCC ( arm-openwrt-linux-muslgnueabi )" DebuggerType="" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O0;-Wall;-fPIC;-march=armv8-a" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./libs/include"/>
+        <IncludePath Value="./libs/include/mosquitto"/>
+        <IncludePath Value="./libs/include/azureiot"/>
+        <IncludePath Value="./libs/include/iothub_service_client"/>
+        <IncludePath Value="./src"/>
+        <Preprocessor Value="NDEBUG"/>
+        <Preprocessor Value="SIEMENS_GATEWAY"/>
+      </Compiler>
+      <Linker Options="-march=armv8-a" Required="yes">
+        <LibraryPath Value="./libs/libs"/>
+        <Library Value="libiothub_client"/>
+        <Library Value="libiothub_client_http_transport"/>
+        <Library Value="libiothub_client_mqtt_transport"/>
+        <Library Value="libumqtt"/>
+        <Library Value="libiothub_client_mqtt_ws_transport"/>
+        <Library Value="libiothub_client_amqp_transport"/>
+        <Library Value="libiothub_client_amqp_ws_transport"/>
+        <Library Value="libiothub_service_client"/>
+        <Library Value="libserializer"/>
+        <Library Value="libuamqp"/>
+        <Library Value="libuhttp"/>
+        <Library Value="libparson"/>
+        <Library Value="libpthread"/>
+        <Library Value="libcurl"/>
+        <Library Value="libssl"/>
+        <Library Value="libumock_c"/>
+        <Library Value="libcrypto"/>
+        <Library Value="libm"/>
+        <Library Value="libmosquitto"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libprov_device_client"/>
+        <Library Value="libprov_device_ll_client"/>
+        <Library Value="libprov_http_transport"/>
+        <Library Value="libprov_mqtt_ws_transport"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libprov_mqtt_transport"/>
+        <Library Value="libxml2"/>
+        <Library Value="libprovisioning_service_client"/>
+        <Library Value="libuuid"/>
+        <Library Value="libcustom_hsm_example"/>
+        <Library Value="libhsm_security_client"/>
+        <Library Value="libaziotsharedutil"/>
+        <Library Value="libmsr_riot"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="Siemens2050_Release/$(ProjectName)" IntermediateDirectory="$(ConfigurationName)" Command="$(OutputFile)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Siemens2050Release" CompilerType="IOT2050_Compiler" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O0;-std=c++11;-Wall;-fPIC;-march=armv8-a" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./libs/IoT2050_Gateway/include"/>
+        <IncludePath Value="./libs/IoT2050_Gateway/include/mosquitto"/>
+        <IncludePath Value="./libs/IoT2050_Gateway/include/azureiot"/>
+        <IncludePath Value="./libs/IoT2050_Gateway/include/iothub_service_client"/>
+        <IncludePath Value="./src"/>
+        <Preprocessor Value="NDEBUG"/>
+        <Preprocessor Value="SIEMENS_GATEWAY"/>
+      </Compiler>
+      <Linker Options="-march=armv8-a" Required="yes">
+        <LibraryPath Value="./libs/IoT2050_Gateway/libs"/>
+        <Library Value="libiothub_client"/>
+        <Library Value="libiothub_client_http_transport"/>
+        <Library Value="libiothub_client_mqtt_transport"/>
+        <Library Value="libumqtt"/>
+        <Library Value="libiothub_client_mqtt_ws_transport"/>
+        <Library Value="libiothub_client_amqp_transport"/>
+        <Library Value="libiothub_client_amqp_ws_transport"/>
+        <Library Value="libiothub_service_client"/>
+        <Library Value="libserializer"/>
+        <Library Value="libuamqp"/>
+        <Library Value="libuhttp"/>
+        <Library Value="libparson"/>
+        <Library Value="libpthread"/>
+        <Library Value="libcurl"/>
+        <Library Value="libssl"/>
+        <Library Value="libumock_c"/>
+        <Library Value="libcrypto"/>
+        <Library Value="libm"/>
+        <Library Value="libmosquitto"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libprov_device_client"/>
+        <Library Value="libprov_device_ll_client"/>
+        <Library Value="libprov_http_transport"/>
+        <Library Value="libprov_mqtt_ws_transport"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libprov_mqtt_transport"/>
+        <Library Value="libxml2"/>
+        <Library Value="libprovisioning_service_client"/>
+        <Library Value="libuuid"/>
+        <Library Value="libcustom_hsm_example"/>
+        <Library Value="libhsm_security_client"/>
+        <Library Value="libaziotsharedutil"/>
+        <Library Value="libmsr_riot"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="Siemens2050_Release/$(ProjectName)" IntermediateDirectory="$(ConfigurationName)" Command="$(OutputFile)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild>
+        <Command Enabled="yes">touch $(OutputFile).auto_gen.crc.txt</Command>
+      </PreBuild>
+      <PostBuild>
+        <Command Enabled="yes">rm $(OutputFile).auto_gen.crc.txt</Command>
+        <Command Enabled="yes">cksum $(OutputFile) &gt;&gt; $(OutputFile).auto_gen.crc.txt</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="TRBRelease" CompilerType="TRB_Compiler" DebuggerType="" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-marm;-mfloat-abi=hard;-mfpu=neon-vfpv4;-mcpu=cortex-a7;--sysroot=/root/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi;--verbose" C_Options="-marm;-mfloat-abi=hard;-mfpu=neon-vfpv4;-mcpu=cortex-a7;--sysroot=/root/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="./libs/TRB_Gateway/include"/>
+        <IncludePath Value="./libs/TRB_Gateway/include/mosquitto"/>
+        <IncludePath Value="./libs/TRB_Gateway/include/azureiot"/>
+        <IncludePath Value="./libs/TRB_Gateway/include/iothub_service_client"/>
+        <IncludePath Value="./src"/>
+        <Preprocessor Value="NDEBUG"/>
+        <Preprocessor Value="TRB_GATEWAY"/>
+      </Compiler>
+      <Linker Options="-march=armv7-a;-mthumb;-mfpu=neon;-mfloat-abi=hard;--sysroot=/opt/TRB_toolchain/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi;--verbose" Required="yes">
+        <LibraryPath Value="./libs/TRB_Gateway/libs"/>
+        <LibraryPath Value="/opt/TRB_toolchain/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi/"/>
+        <LibraryPath Value="/opt/TRB_toolchain/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi/lib"/>
+        <LibraryPath Value="/opt/TRB_toolchain/TRBGateway/toolchain-arm_cortex-a7+neon-vfpv4_gcc-8.4.0_musl_eabi/usr/lib"/>
+        <Library Value="libiothub_client"/>
+        <Library Value="libiothub_client_http_transport"/>
+        <Library Value="libiothub_client_mqtt_transport"/>
+        <Library Value="libumqtt"/>
+        <Library Value="libiothub_client_mqtt_ws_transport"/>
+        <Library Value="libiothub_client_amqp_transport"/>
+        <Library Value="libiothub_client_amqp_ws_transport"/>
+        <Library Value="libiothub_service_client"/>
+        <Library Value="libserializer"/>
+        <Library Value="libuamqp"/>
+        <Library Value="libuhttp"/>
+        <Library Value="libparson"/>
+        <Library Value="libpthread"/>
+        <Library Value="libcurl"/>
+        <Library Value="libssl"/>
+        <Library Value="libumock_c"/>
+        <Library Value="libcrypto"/>
+        <Library Value="libm"/>
+        <Library Value="libprov_auth_client"/>
+        <Library Value="libmosquitto"/>
+        <Library Value="libhsm_security_client"/>
+        <Library Value="libaziotsharedutil"/>
+        <Library Value="libutpm"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="TRB_Release/$(ProjectName)" IntermediateDirectory="$(ConfigurationName)" Command="$(OutputFile)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild>
+        <Command Enabled="yes">touch $(OutputFile).auto_gen.crc.txt</Command>
+      </PreBuild>
+      <PostBuild>
+        <Command Enabled="yes">rm $(OutputFile).auto_gen.crc.txt</Command>
+        <Command Enabled="yes">cksum $(OutputFile) &gt;&gt; $(OutputFile).auto_gen.crc.txt</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>
